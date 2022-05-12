@@ -1,0 +1,52 @@
+---
+# PERSISTENT VOLUME CLAIMS HERE
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  creationTimestamp: null
+  labels:
+    app: <SOMETHING>
+  name: <SOMETHING>
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+status: {}
+---
+# DEPLOYMENT DATA HERE
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <SOMETHING>
+  labels:
+    app: <SOMETHING>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <SOMETHING>
+  template:
+    metadata:
+      labels:
+        app: <SOMETHING>
+    spec:
+      containers:
+        - name: <SOMETHING>
+          image: <SOMETHING>
+          ports:
+            - containerPort: <PORT TO EXPOSE TO SERVICE/OTHER PODS>
+---
+# SERVICE DATA HERE
+apiVersion: v1
+kind: Service
+metadata:
+  name: <SOMETHING>
+spec:
+  selector:
+    app: <SOMETHING>
+  ports:
+    - protocol: <TCP/UDP>
+      port: <SOMETHING EXTERNAL>
+      targetPort: <PORT CONTAINER EXPOSED>
